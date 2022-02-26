@@ -76,6 +76,7 @@ const getElements = (path) => {
       if (i.includes("-")) {
         throw new Error(`layer name can not contain dashes, please fix: ${i}`);
       }
+
       return {
         id: index,
         name: cleanName(i),
@@ -111,10 +112,9 @@ const layersSetup = (layersOrder) => {
 };
 
 const saveImage = (_editionCount) => {
-  fs.writeFileSync(
-    `${buildDir}/images/${_editionCount}.png`,
-    canvas.toBuffer("image/png")
-  );
+  const filePath = `${buildDir}/images/${_editionCount}.png`;
+  fs.writeFileSync(filePath, canvas.toBuffer("image/png"));
+  return filePath;
 };
 
 const genColor = () => {
@@ -401,6 +401,7 @@ const startCreating = async () => {
           debugLogs
             ? console.log("Editions left to create: ", abstractedIndexes)
             : null;
+
           saveImage(abstractedIndexes[0]);
           addMetadata(newDna, abstractedIndexes[0]);
           saveMetaDataSingleFile(abstractedIndexes[0]);
@@ -427,6 +428,8 @@ const startCreating = async () => {
     layerConfigIndex++;
   }
   writeMetaData(JSON.stringify(metadataList, null, 2));
+
+  return true;
 };
 
 module.exports = { startCreating, buildSetup, getElements };

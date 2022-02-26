@@ -13,6 +13,7 @@
   },
   "scripts": {
     "start": "node index.js",
+    "ipfs": "node ipfs/index.js",
     "generate": "node index.js",
     "rarity": "node utils/rarity.js",
     "preview": "node utils/preview.js",
@@ -24,8 +25,11 @@
   "author": "LizArt, @erick-pacheco, Kirill Shibanov",
   "license": "MIT",
   "dependencies": {
+    "@pinata/sdk": "^1.1.23",
     "canvas": "^2.8.0",
     "gif-encoder-2": "^1.0.5",
+    "ipfs": "^0.62.1",
+    "ipfs-http-client": "^56.0.1",
     "sha1": "^1.1.1"
   }
 }
