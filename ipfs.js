@@ -7,7 +7,10 @@ log("Getting started.....");
 async function ipfs() {
   const meta = [];
   for await (const file of _ipfs.addAll(globSource("./build/images", "**/*"))) {
-    const fileUrl = `ipfs://${file.cid}`.replace(/.*\(|\).*/g, "");
+    const cid = `${file.cid}`.replace(/.*\(|\).*/g, "");
+    const fileUrl = `ipfs://${cid}`;
+    log("\x1b[32m", `Created edition: ${file.path}, with CID: ${cid}`);
+
     const _cid = `${file.cid}`.replace(/.*\(|\).*/g, "");
 
     let str = file.path;
@@ -19,6 +22,7 @@ async function ipfs() {
     content.name = `Dragon Nation Generative #${str}`;
     content.gateway = "https://gateway.pinata.cloud/ipfs/" + _cid;
     content.compiler = "LizArt Engine";
+    content.date = 2022;
     content.description =
       "You own a token for something great! LizArt is an international collaboration of artists, developers, and crypto enthusiasts. We focus on helping NONPROFITS and CHARITIES around the multiverse!";
     fs.writeFileSync(
@@ -37,6 +41,5 @@ async function ipfs() {
     "_metadata.json file created successfully. This file is a combination of all file metadata. Save it!"
   );
 }
-
 
 module.exports = ipfs;
